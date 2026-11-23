@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lalos Panadería | Comparte Felicidad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Barra superior crema -->
+  <header class="site-header">
+    <div class="top-bar">
+      <div class="container top-bar-inner">
+        <!-- Logo real desde img/logoPNG.png -->
+        <a href="#inicio" class="brand-logo" aria-label="Lalos Panadería Inicio">
+          <img src="img/logoPNG.png" alt="Lalos - Comparte Felicidad" class="logo-img" />
+        </a>
+
+        <!-- Buscador visual (Fase 1 informativa) -->
+        <form class="search-box" onsubmit="return false;" aria-label="Buscador de productos">
+          <input type="text" placeholder="Buscar productos (Catálogo próximamente)..." disabled />
+          <select aria-label="Categoría producto">
+            <option>CATEGORÍA PRODUCTO</option>
+            <option>CATERING</option>
+            <option>PANADERÍA</option>
+            <option>TORTAS</option>
+            <option>PIZZAS</option>
+            <option>PASTAS</option>
+          </select>
+          <button type="submit" aria-label="Buscar">🔍</button>
+        </form>
+
+        <!-- Accesos de usuario, carrito y favoritos (visual Fase 1) -->
+        <div class="user-actions">
+          <a href="#nosotros" class="action-link">👤 Iniciar sesión / Registrarse</a>
+          <a href="#pagos" class="cart-badge" title="Carrito disponible en la Fase 2">
+            🛒 <span class="count">0</span> <strong>S/ 0.00</strong>
+          </a>
+          <span class="fav-badge" title="Favoritos">🤍 <span class="count">0</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Franja terracota con "Lista de categorías" desplegable + menú de la entrega -->
+    <nav class="main-nav-bar" aria-label="Navegación principal">
+      <div class="container nav-bar-inner">
+        <div class="categories-dropdown">
+          <button class="categories-btn" type="button">
+            <span>☰ Lista de categorías</span>
+            <span>^</span>
+          </button>
+          <ul class="categories-menu">
+            <li><a href="#nosotros">CATERING</a></li>
+            <li><a href="#nosotros">PANADERÍA</a></li>
+            <li><a href="#nosotros">TORTAS</a></li>
+            <li><a href="#nosotros">PIZZAS</a></li>
+            <li><a href="#nosotros">PASTAS</a></li>
+          </ul>
+        </div>
+
+        <ul class="nav-links">
+          <li><a href="#inicio">INICIO</a></li>
+          <li><a href="#nosotros">NOSOTROS</a></li>
+          <li><a href="#pagos">MÉTODOS DE PAGO</a></li>
+          <li><a href="#ubicacion">UBICACIÓN Y HORARIO</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Portada con img/portada.jpg -->
+    <section id="inicio" class="hero-banner">
+      <div class="hero-overlay">
+        <div class="container hero-banner-content">
+          <span class="hero-pill">AVANCE DE TIENDA ONLINE · SIN CATÁLOGO AÚN</span>
+          <h1>NOS RENOVAMOS PARA COMPARTIR FELICIDAD</h1>
+          <p>
+            Pan recién horneado, pastelería, catering, pizzas y pastas elaboradas cada día en
+            <strong>Lalos Panadería</strong>. Conoce nuestra historia y nuestros medios de pago habilitados.
+          </p>
+          <div class="hero-buttons">
+            <a href="#nosotros" class="btn btn-yellow">Conocer Nosotros</a>
+            <a href="#pagos" class="btn btn-white">Ver Métodos de Pago</a>
+            <a
+              href="https://wa.me/51999999999?text=Hola%20Lalos%20Panader%C3%ADa%2C%20quisiera%20hacer%20una%20consulta."
+              class="btn btn-wa-inline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              💬 WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Nosotros -->
+    <section id="nosotros" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Nuestra identidad</span>
+          <h2>Nosotros</h2>
+          <p>
+            Conoce el trabajo detrás de cada hornada en Lalos Panadería y por qué damos este primer paso hacia el comercio electrónico.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <article class="card about-story">
+            <h3>Quiénes somos</h3>
+            <p>
+              <strong>Lalos Panadería</strong> nace con el compromiso de ofrecer pan fresco y productos de panadería
+              de alta calidad para el desayuno, la lonchera y la mesa familiar. Cada jornada cuidamos los procesos de amasado,
+              fermentación y horneado para garantizar sabor y frescura constante.
+            </p>
+            <p>
+              Esta plataforma web representa la <strong>primera etapa de nuestro canal de comercio electrónico</strong>:
+              presentamos nuestra identidad, categorías próximas, ubicación, horarios y medios de pago antes de habilitar el catálogo digital.
+            </p>
+            <img src="img/portada.jpg" alt="Familia Panadera en Lalos Panadería" class="about-photo" />
+          </article>
+
+          <div class="about-mv">
+            <article class="card">
+              <h3>Misión</h3>
+              <p>
+                Elaborar panes y productos de pastelería frescos cada día, brindando atención cercana,
+                puntualidad e higiene en cada pedido.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3>Visión</h3>
+              <p>
+                Ser la panadería de confianza de nuestra comunidad en Huancayo, integrando canales digitales que faciliten
+                los pedidos y entregas sin perder el toque artesanal.
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <div class="pillars-grid">
+          <article class="pillar">
+            <h4>Horneado diario</h4>
+            <p>Producción continua desde primeras horas de la mañana para asegurar productos frescos.</p>
+          </article>
+          <article class="pillar">
+            <h4>Variedad artesanal</h4>
+            <p>Líneas próximas de Panadería, Catering, Tortas, Pizzas y Pastas.</p>
+          </article>
+          <article class="pillar">
+            <h4>Fase 1 · Sin catálogo aún</h4>
+            <p>Esta entrega presenta la marca y medios de pago; el carrito y catálogo se activarán en la siguiente etapa.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección Métodos de pago (Primera parte) -->
+    <section id="pagos" class="section section-alt">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Primera parte · Informativa</span>
+          <h2>Métodos de pago</h2>
+          <p>
+            Conoce las opciones de pago que maneja Lalos Panadería. En esta primera entrega se presentan de manera informativa
+            mientras preparamos el módulo de catálogo y carrito.
+          </p>
+        </div>
+
+        <div class="payments-grid">
+          <article class="payment-card">
+            <span class="payment-tag">Más usado</span>
+            <h3>Billeteras digitales (Yape / Plin)</h3>
+            <p>Pagos inmediatos desde el celular mediante código QR o número afiliado en tienda y para pedidos programados.</p>
+            <ul>
+              <li><strong>Yape:</strong> [COMPLETAR: Nombre del titular o "Disponible en caja"]</li>
+              <li><strong>Plin:</strong> Disponible mediante QR interoperable</li>
+            </ul>
+          </article>
+
+          <article class="payment-card">
+            <span class="payment-tag">En local y recojo</span>
+            <h3>Efectivo y Tarjetas (POS)</h3>
+            <p>Atención directa en mostrador aceptando efectivo en soles y tarjetas de débito o crédito mediante terminal POS.</p>
+            <ul>
+              <li>Efectivo (Soles)</li>
+              <li>Tarjetas Visa y Mastercard (Débito / Crédito)</li>
+            </ul>
+          </article>
+
+          <article class="payment-card">
+            <span class="payment-tag">Pedidos especiales</span>
+            <h3>Transferencia bancaria</h3>
+            <p>Ideal para pedidos de catering, tortas o reservas anticipadas con validación previa de comprobante.</p>
+            <ul>
+              <li><strong>Banco:</strong> [COMPLETAR: BCP / Interbank / BBVA]</li>
+              <li>Confirmación directa antes del despacho</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="notice-box">
+          <strong>Importante (Alcance de esta entrega):</strong>       </div>
+    </section>
+
+    <!-- Sección Ubicación y Horario -->
+    <section id="ubicacion" class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-kicker">Visítanos o contáctanos</span>
+          <h2>Ubicación y Horario de Atención</h2>
+          <p>Información de nuestro punto de atención en Huancayo.</p>
+        </div>
+
+        <div class="info-grid">
+          <article class="card">
+            <h3>Dirección del local</h3>
+            <p><strong>Dirección:</strong> Avenida Giráldez 363, Huancayo</p>
+            <p><strong>Referencia:</strong> Cerca al grifo en Giráldez</p>
+          </article>
+
+          <article class="card">
+            <h3>Horario y WhatsApp</h3>
+            <p><strong>Lunes a sábado:</strong> [7:00 a. m. – 10:00 p. m.]</p>
+            <p><strong>Domingos y feriados:</strong> [8:00 a. m. – 9:30 p. m.]</p>
+            <p>
+              <strong>WhatsApp directo:</strong>
+              <a
+                href="https://wa.me/51999999999?text=Hola%20Lalos%20Panader%C3%ADa%2C%20quisiera%20consultar%20sobre%20sus%20horarios%20y%20pagos."
+                class="inline-wa-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Chatear por WhatsApp (+51 999 999 999)
+              </a>
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <h3>Lalos Panadería · Comparte Felicidad</h3>
+        <p>Av. Giráldez 363, Huancayo · Proyecto de Comercio Electrónico (GitHub Pages).</p>
+      </div>
+      <div class="footer-meta">
+        <p><strong>Estado del sitio:</strong> Fase 1 — Nosotros, Métodos de pago (Parte 1) y Ubicación</p>
+        <p><strong>Próxima fase:</strong> Catálogo de productos y carrito de compras</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Botón flotante de WhatsApp (reemplaza 51999999999 por el número real) -->
+  <a
+    href="https://wa.me/51999999999?text=Hola%20Lalos%20Panader%C3%ADa%2C%20quisiera%20consultar%20sobre%20sus%20productos%20y%20pagos."
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chatear por WhatsApp con Lalos Panadería"
+  >
+    💬 WhatsApp
+  </a>
+
+</body>
+</html>
