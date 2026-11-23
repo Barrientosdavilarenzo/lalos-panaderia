@@ -7,239 +7,744 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --cream-top: #fdf8ee;
+      --terracotta: #ba5328;
+      --terracotta-dark: #963d18;
+      --mustard: #f7b731;
+      --mustard-hover: #e5a31d;
+      --lalos-red: #cf2027;
+      --wa-green: #25d366;
+      --wa-green-hover: #1eb356;
+      --bg: #fbf7f2;
+      --surface: #ffffff;
+      --text: #261b14;
+      --muted: #675548;
+      --border: #e5d8c8;
+      --radius: 10px;
+      --shadow: 0 8px 24px rgba(38, 27, 20, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Plus Jakarta Sans", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main { flex: 1; }
+    .container { width: min(1180px, 92%); margin: 0 auto; }
+
+    .page-view { display: none; }
+    .page-view.active { display: block; }
+
+    .section-inner { padding: 2.2rem 0 4rem; }
+
+    .window-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 1.4rem;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .top-bar {
+      background-color: var(--cream-top);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .top-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .logo-img { height: 52px; width: auto; display: block; border-radius: 6px; }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      max-width: 520px;
+      background: #fff;
+      border: 1px solid #d9cec0;
+      border-radius: 5px;
+      overflow: hidden;
+      height: 40px;
+    }
+
+    .search-box input {
+      flex: 1;
+      border: none;
+      padding: 0 10px 0 12px;
+      font-size: 0.88rem;
+      color: var(--text);
+      outline: none;
+      min-width: 0;
+    }
+
+    .clear-search-btn {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.85rem;
+      padding: 0 8px;
+      cursor: pointer;
+    }
+
+    .search-box select {
+      border: none;
+      border-left: 1px solid #e4dad0;
+      padding: 0 10px;
+      height: 100%;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #4a3f37;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .search-box button[type="submit"] {
+      border: none;
+      border-left: 1px solid #e4dad0;
+      background: #fff;
+      padding: 0 13px;
+      height: 100%;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .user-actions { display: flex; align-items: center; gap: 10px; }
+
+    .cart-badge, .fav-badge {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      font-size: 0.86rem;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .count {
+      background: var(--terracotta);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 1px 6px;
+    }
+
+    .fav-count { background: var(--lalos-red); }
+
+    .main-nav-bar { background-color: var(--terracotta); color: #fff; }
+    .nav-bar-inner { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+    .categories-dropdown { position: relative; }
+
+    .categories-btn {
+      background-color: var(--mustard);
+      color: #261b14;
+      border: none;
+      padding: 13px 18px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      cursor: pointer;
+      min-width: 225px;
+    }
+
+    .categories-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      min-width: 255px;
+      background: #fff;
+      list-style: none;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      z-index: 60;
+    }
+
+    .categories-menu.open { display: block; }
+    .categories-menu li + li { border-top: 1px solid #f0e8de; }
+    .categories-menu a {
+      display: block;
+      padding: 10px 16px;
+      text-decoration: none;
+      color: #2d221b;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+    .categories-menu a:hover { background-color: #fdf6ec; color: var(--terracotta); }
+
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 8px 0; }
+    .nav-links a {
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+      font-size: 0.84rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+    .nav-links a:hover, .nav-links a.active { background: rgba(0, 0, 0, 0.22); }
+
+    .hero-banner {
+      background-color: #3b281c;
+      background-image: url("img/portada.jpg");
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+    }
+
+    .hero-overlay {
+      background: linear-gradient(90deg, rgba(22, 14, 9, 0.86) 0%, rgba(22, 14, 9, 0.56) 100%);
+      padding: 4.5rem 0;
+    }
+
+    .hero-banner-content { max-width: 680px; }
+    .hero-pill {
+      display: inline-block;
+      background: var(--mustard);
+      color: #261b14;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    .hero-banner h1 { font-size: clamp(1.9rem, 4vw, 2.75rem); font-weight: 800; line-height: 1.15; margin-bottom: 12px; }
+    .hero-banner p { font-size: 1rem; color: #f4ece3; margin-bottom: 22px; }
+    .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .home-windows-section { padding: 3rem 0 4rem; }
+    .window-cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
+
+    .window-entry-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .window-entry-card img { width: 100%; height: 220px; object-fit: cover; }
+    .window-entry-body { padding: 1.4rem; }
+    .window-entry-body h3 { font-size: 1.25rem; margin: 4px 0 8px; }
+    .window-entry-body p { color: var(--muted); font-size: 0.92rem; margin-bottom: 16px; }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 10px 18px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-yellow { background-color: var(--mustard); color: #261b14; }
+    .btn-white { background-color: #fff; color: var(--terracotta-dark); border: 1px solid var(--border); }
+    .btn-secondary { background-color: #efe5d8; color: var(--text); }
+    .btn-wa-inline { background-color: var(--wa-green); color: #fff; }
+
+    .section-header { max-width: 680px; margin-bottom: 1.5rem; }
+    .section-kicker {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--terracotta);
+      margin-bottom: 4px;
+    }
+    .section-header h2 { font-size: clamp(1.65rem, 3vw, 2.15rem); margin-bottom: 6px; }
+    .section-header p { color: var(--muted); }
+
+    .filter-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .chip {
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .chip.active { background: var(--terracotta); color: #fff; border-color: var(--terracotta); }
+
+    .catering-promo-banner {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.6rem;
+      min-height: 195px;
+      display: flex;
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .catering-banner-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .catering-banner-overlay {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 1.8rem 2rem;
+      background: linear-gradient(90deg, rgba(28, 17, 11, 0.86) 0%, rgba(28, 17, 11, 0.52) 100%);
+      color: #fff;
+    }
+
+    .badge-catering {
+      display: inline-block;
+      background: var(--mustard);
+      color: #261b14;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+
+    .catalog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-img-wrap { position: relative; height: 220px; background: #f5efe6; }
+    .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .fav-btn-card {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.94);
+      font-size: 1rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .product-body { padding: 1.15rem 1.25rem 1.3rem; display: flex; flex-direction: column; flex: 1; }
+    .product-cat-label { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; color: var(--terracotta); margin-bottom: 4px; }
+    .product-title { font-size: 1.08rem; font-weight: 800; margin-bottom: 6px; }
+    .product-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 14px; flex: 1; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .product-price { font-size: 1.05rem; font-weight: 800; }
+
+    .btn-add-cart {
+      background: var(--terracotta);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 9px 14px;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .coming-soon-badge {
+      display: inline-block;
+      background: #f5e6cf;
+      color: #7c4a12;
+      border: 1px solid #e6c793;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 999px;
+    }
+
+    .empty-catalog-msg {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 2.5rem 1rem;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      color: var(--muted);
+    }
+
+    .about-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 1.5rem; }
+    .about-mv { display: grid; gap: 1.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); }
+    .card h3 { font-size: 1.15rem; color: var(--terracotta-dark); margin-bottom: 0.55rem; }
+    .card p { color: var(--muted); }
+    .card p + p { margin-top: 0.65rem; }
+    .about-photo { width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-top: 1rem; }
+    .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .inline-wa-link { color: var(--terracotta-dark); font-weight: 700; text-decoration: underline; }
+
+    .modal-backdrop, .cart-drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 13, 9, 0.62);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open, .cart-drawer-backdrop.open { display: flex; }
+
+    .modal-box {
+      position: relative;
+      background: var(--surface);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 440px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.6rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+    }
+
+    .checkout-modal { max-width: 560px; }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: #faf6f0;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .qty-modal-img { width: 100%; height: 175px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+    .qty-modal-cat { font-size: 0.74rem; font-weight: 800; text-transform: uppercase; color: var(--terracotta); }
+    .qty-modal h3 { font-size: 1.25rem; margin: 2px 0 4px; }
+    .qty-modal-price { font-size: 1.1rem; font-weight: 800; margin-bottom: 16px; }
+    .qty-control-block { margin-bottom: 18px; }
+    .qty-control-block label { display: block; font-size: 0.78rem; font-weight: 800; color: var(--muted); margin-bottom: 8px; }
+    .qty-stepper { display: inline-flex; align-items: center; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: #faf6f0; }
+    .qty-stepper button { width: 42px; height: 40px; border: none; background: transparent; font-size: 1.15rem; font-weight: 700; cursor: pointer; }
+    .qty-stepper span { min-width: 48px; text-align: center; font-weight: 800; font-size: 1rem; }
+    .qty-subtotal-preview { margin-top: 8px; font-size: 0.88rem; font-weight: 700; color: var(--terracotta-dark); }
+
+    .btn-terracotta-full, .btn-terracotta-pay {
+      width: 100%;
+      background: var(--terracotta);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 18px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn-terracotta-full:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .cart-drawer-backdrop { justify-content: flex-end; padding: 0; }
+    .cart-drawer { width: min(400px, 100vw); height: 100vh; background: var(--surface); display: flex; flex-direction: column; }
+    .drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 1.15rem 1.35rem; border-bottom: 1px solid var(--border); background: var(--cream-top); }
+    .drawer-header .modal-close { position: static; }
+    .drawer-items { flex: 1; overflow-y: auto; padding: 1.15rem 1.35rem; }
+    .empty-cart-msg { text-align: center; color: var(--muted); margin-top: 2rem; font-size: 0.92rem; }
+    .cart-item-row { display: flex; gap: 12px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--border); align-items: center; }
+    .cart-item-row img { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; }
+    .cart-item-info { flex: 1; }
+    .cart-item-info h4 { font-size: 0.92rem; margin-bottom: 2px; }
+    .cart-item-info span { font-size: 0.84rem; color: var(--muted); }
+    .cart-item-controls { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+    .cart-item-controls button { width: 26px; height: 26px; border: 1px solid var(--border); background: #faf6f0; border-radius: 4px; font-weight: 700; cursor: pointer; }
+    .remove-item-btn { background: transparent; border: none; color: var(--lalos-red); font-size: 0.9rem; cursor: pointer; }
+    .drawer-footer { padding: 1.15rem 1.35rem; border-top: 1px solid var(--border); background: #faf6f0; }
+    .drawer-summary-row { display: flex; justify-content: space-between; font-size: 1.05rem; margin-bottom: 12px; }
+
+    .sim-banner { background: #fff2d6; border: 1px solid #ecc67b; color: #6c4607; font-size: 0.72rem; font-weight: 800; text-align: center; padding: 5px 10px; border-radius: 6px; margin-bottom: 10px; }
+    .steps-indicator { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 12px 0 18px; }
+    .step-pill { text-align: center; font-size: 0.76rem; font-weight: 700; padding: 7px 6px; border-radius: 6px; background: #f1e9de; color: var(--muted); }
+    .step-pill.active { background: var(--terracotta); color: #fff; }
+    .checkout-step { display: none; }
+    .checkout-step.active { display: block; }
+    .checkout-step h4 { font-size: 1.05rem; margin-bottom: 12px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 5px; }
+    .form-group input { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 0.92rem; }
+    .error-text { color: var(--lalos-red); font-size: 0.78rem; font-weight: 600; display: block; margin-top: 4px; }
+    .radio-card { display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; cursor: pointer; }
+    .radio-card div { display: flex; flex-direction: column; }
+    .radio-card span { font-size: 0.84rem; color: var(--muted); }
+    .payment-methods-list { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .pm-option { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border: 1px solid var(--border); border-radius: 999px; font-size: 0.82rem; font-weight: 700; cursor: pointer; background: #faf6f0; }
+    .pm-option.active { background: var(--terracotta); color: #fff; border-color: var(--terracotta); }
+    .payment-detail-box, .order-summary-box { background: #faf6f0; border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 14px; font-size: 0.88rem; }
+    .qr-fake { width: 112px; height: 112px; margin: 8px auto; border: 3px solid #261b14; border-radius: 8px; background: repeating-linear-gradient(45deg, #261b14 0, #261b14 6px, #fff 6px, #fff 12px); }
+    .order-result-box { background: #e8f8ee; border: 1px solid #8bd6a8; color: #165b33; padding: 14px; border-radius: 8px; margin-bottom: 14px; font-size: 0.9rem; }
+    .step-actions { display: flex; justify-content: space-between; gap: 10px; margin-top: 14px; }
+    .step-actions.right { justify-content: flex-end; }
+
+    .toast-container { position: fixed; bottom: 78px; right: 20px; z-index: 400; display: flex; flex-direction: column; gap: 8px; }
+    .toast { background: #231812; color: #fff; padding: 10px 16px; border-radius: 8px; border-left: 4px solid var(--mustard); font-size: 0.86rem; font-weight: 600; }
+
+    .whatsapp-float {
+      position: fixed; bottom: 20px; right: 20px; z-index: 200;
+      background-color: var(--wa-green); color: #fff; text-decoration: none;
+      font-weight: 700; font-size: 0.9rem; padding: 11px 17px; border-radius: 999px;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    .footer { background: #231812; color: #f5ede3; padding: 2rem 0; }
+    .footer-content { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+    .footer h3 { color: var(--mustard); margin-bottom: 4px; }
+    .footer p { font-size: 0.88rem; color: #d6c7b8; }
+
+    @media (max-width: 900px) {
+      .window-cards-grid, .catalog-grid, .about-grid, .info-grid { grid-template-columns: 1fr; }
+      .search-box { order: 3; max-width: 100%; width: 100%; }
+    }
+  </style>
 </head>
 <body>
-
-  <!-- Barra superior crema -->
   <header class="site-header">
     <div class="top-bar">
       <div class="container top-bar-inner">
-        <!-- Logo real desde img/logoPNG.png -->
-        <a href="#inicio" class="brand-logo" aria-label="Lalos Panadería Inicio">
+        <a href="#inicio" class="brand-logo" data-view-target="inicio">
           <img src="img/logoPNG.png" alt="Lalos - Comparte Felicidad" class="logo-img" />
         </a>
 
-        <!-- Buscador visual (Fase 1 informativa) -->
-        <form class="search-box" onsubmit="return false;" aria-label="Buscador de productos">
-          <input type="text" placeholder="Buscar productos (Catálogo próximamente)..." disabled />
-          <select aria-label="Categoría producto">
-            <option>CATEGORÍA PRODUCTO</option>
-            <option>CATERING</option>
-            <option>PANADERÍA</option>
-            <option>TORTAS</option>
-            <option>PIZZAS</option>
-            <option>PASTAS</option>
+        <form class="search-box" id="search-form">
+          <input type="text" id="search-input" placeholder="Buscar en Panadería o Catering..." autocomplete="off" />
+          <button type="button" id="clear-search-btn" class="clear-search-btn" style="display:none;">✕</button>
+          <select id="search-category">
+            <option value="panaderia">VENTANA PANADERÍA</option>
+            <option value="catering">VENTANA CATERING</option>
           </select>
-          <button type="submit" aria-label="Buscar">🔍</button>
+          <button type="submit">🔍</button>
         </form>
 
-        <!-- Accesos de usuario, carrito y favoritos (visual Fase 1) -->
         <div class="user-actions">
-          <a href="#nosotros" class="action-link">👤 Iniciar sesión / Registrarse</a>
-          <a href="#pagos" class="cart-badge" title="Carrito disponible en la Fase 2">
-            🛒 <span class="count">0</span> <strong>S/ 0.00</strong>
-          </a>
-          <span class="fav-badge" title="Favoritos">🤍 <span class="count">0</span></span>
+          <button type="button" class="cart-badge" id="open-cart-btn">
+            🛒 <span class="count" id="cart-count">0</span> <strong id="cart-subtotal">S/ 0.00</strong>
+          </button>
+          <button type="button" class="fav-badge" id="toggle-fav-only-btn">
+            ❤️ <span class="count fav-count" id="fav-count">0</span>
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Franja terracota con "Lista de categorías" desplegable + menú de la entrega -->
-    <nav class="main-nav-bar" aria-label="Navegación principal">
+    <nav class="main-nav-bar">
       <div class="container nav-bar-inner">
-        <div class="categories-dropdown">
-          <button class="categories-btn" type="button">
+        <div class="categories-dropdown" id="categories-dropdown">
+          <button class="categories-btn" type="button" id="categories-toggle">
             <span>☰ Lista de categorías</span>
-            <span>^</span>
+            <span id="categories-arrow">⌄</span>
           </button>
-          <ul class="categories-menu">
-            <li><a href="#nosotros">CATERING</a></li>
-            <li><a href="#nosotros">PANADERÍA</a></li>
-            <li><a href="#nosotros">TORTAS</a></li>
-            <li><a href="#nosotros">PIZZAS</a></li>
-            <li><a href="#nosotros">PASTAS</a></li>
+          <ul class="categories-menu" id="categories-menu">
+            <li><a href="#panaderia" data-view-target="panaderia">🍞 PANADERÍA (3 productos)</a></li>
+            <li><a href="#catering" data-view-target="catering">🥂 CATERING (4 servicios)</a></li>
+            <li><a href="#panaderia" data-view-target="panaderia" data-upcoming="1">🎂 TORTAS (Próximamente)</a></li>
+            <li><a href="#panaderia" data-view-target="panaderia" data-upcoming="1">🍕 PIZZAS (Próximamente)</a></li>
+            <li><a href="#panaderia" data-view-target="panaderia" data-upcoming="1">🍝 PASTAS (Próximamente)</a></li>
           </ul>
         </div>
 
         <ul class="nav-links">
-          <li><a href="#inicio">INICIO</a></li>
-          <li><a href="#nosotros">NOSOTROS</a></li>
-          <li><a href="#pagos">MÉTODOS DE PAGO</a></li>
-          <li><a href="#ubicacion">UBICACIÓN Y HORARIO</a></li>
+          <li><a href="#inicio" class="nav-tab active" data-view-target="inicio">INICIO</a></li>
+          <li><a href="#panaderia" class="nav-tab" data-view-target="panaderia">PANADERÍA</a></li>
+          <li><a href="#catering" class="nav-tab" data-view-target="catering">CATERING</a></li>
+          <li><a href="#nosotros" class="nav-tab" data-view-target="nosotros">NOSOTROS</a></li>
+          <li><a href="#ubicacion" class="nav-tab" data-view-target="ubicacion">UBICACIÓN</a></li>
         </ul>
       </div>
     </nav>
   </header>
 
   <main>
-    <!-- Portada con img/portada.jpg -->
-    <section id="inicio" class="hero-banner">
-      <div class="hero-overlay">
-        <div class="container hero-banner-content">
-          <span class="hero-pill">AVANCE DE TIENDA ONLINE · SIN CATÁLOGO AÚN</span>
-          <h1>NOS RENOVAMOS PARA COMPARTIR FELICIDAD</h1>
-          <p>
-            Pan recién horneado, pastelería, catering, pizzas y pastas elaboradas cada día en
-            <strong>Lalos Panadería</strong>. Conoce nuestra historia y nuestros medios de pago habilitados.
-          </p>
-          <div class="hero-buttons">
-            <a href="#nosotros" class="btn btn-yellow">Conocer Nosotros</a>
-            <a href="#pagos" class="btn btn-white">Ver Métodos de Pago</a>
-            <a
-              href="https://wa.me/51999999999?text=Hola%20Lalos%20Panader%C3%ADa%2C%20quisiera%20hacer%20una%20consulta."
-              class="btn btn-wa-inline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              💬 WhatsApp
-            </a>
+    <section id="view-inicio" class="page-view active">
+      <div class="hero-banner">
+        <div class="hero-overlay">
+          <div class="container hero-banner-content">
+            <span class="hero-pill">LALOS PANADERÍA · AV. GIRÁLDEZ 363, HUANCAYO</span>
+            <h1>PAN RECIÉN HORNEADO Y CATERING PARA COMPARTIR FELICIDAD</h1>
+            <p>Abre la ventana de <strong>Panadería</strong> o la ventana de <strong>Catering</strong>, añade al carrito y prueba la pasarela de pago simulada.</p>
+            <div class="hero-buttons">
+              <button type="button" class="btn btn-yellow" data-view-target="panaderia">Ir a Panadería →</button>
+              <button type="button" class="btn btn-white" data-view-target="catering">Ir a Catering →</button>
+              <a href="https://wa.me/51999999999" class="btn btn-wa-inline" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
+            </div>
           </div>
+        </div>
+      </div>
+
+      <div class="container home-windows-section">
+        <div class="section-header">
+          <span class="section-kicker">Explora nuestras líneas</span>
+          <h2>Selecciona una ventana</h2>
+          <p>Cada ventana muestra sus propias imágenes, precios, favoritos y carrito.</p>
+        </div>
+
+        <div class="window-cards-grid">
+          <article class="window-entry-card">
+            <img src="img/panaderia2.jpg" alt="Ventana Panadería Lalos" />
+            <div class="window-entry-body">
+              <span class="product-cat-label">3 PRODUCTOS DISPONIBLES</span>
+              <h3>Ventana de Panadería</h3>
+              <p>Pre Pizza Lalos (8 porciones), Pan de molde Multi Grano y Pan de molde Masa Madre.</p>
+              <button type="button" class="btn btn-yellow" data-view-target="panaderia">Abrir Panadería →</button>
+            </div>
+          </article>
+
+          <article class="window-entry-card">
+            <img src="img/cateting_portada.jpg" alt="Ventana Catering Lalos" />
+            <div class="window-entry-body">
+              <span class="product-cat-label">4 SERVICIOS DISPONIBLES</span>
+              <h3>Ventana de Catering</h3>
+              <p>Catering Empresarial, Catering para Bodas, Coffee Break y Catering Familiar.</p>
+              <button type="button" class="btn btn-yellow" data-view-target="catering">Abrir Catering →</button>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- Sección Nosotros -->
-    <section id="nosotros" class="section">
-      <div class="container">
+    <section id="view-panaderia" class="page-view">
+      <div class="container section-inner">
+        <div class="window-topbar">
+          <button type="button" class="btn btn-secondary" data-view-target="inicio">← Volver a Inicio</button>
+          <button type="button" class="btn btn-white" data-view-target="catering">Cambiar a Catering →</button>
+        </div>
+        <div class="section-header">
+          <span class="section-kicker">Línea de horno · Panadería Lalos</span>
+          <h2>Ventana de Panadería</h2>
+          <p>Selecciona tus productos, elige la cantidad y añádelos al carrito.</p>
+        </div>
+        <div class="filter-chips" id="panaderia-chips">
+          <button type="button" class="chip active" data-pan-filter="todos">Todos en Panadería (3)</button>
+          <button type="button" class="chip" data-pan-filter="favoritos">Solo Favoritos ❤️</button>
+          <button type="button" class="chip" data-pan-filter="proximamente">Próximamente (Fase 3)</button>
+        </div>
+        <div class="catalog-grid" id="panaderia-grid"></div>
+      </div>
+    </section>
+
+    <section id="view-catering" class="page-view">
+      <div class="container section-inner">
+        <div class="window-topbar">
+          <button type="button" class="btn btn-secondary" data-view-target="inicio">← Volver a Inicio</button>
+          <button type="button" class="btn btn-white" data-view-target="panaderia">Cambiar a Panadería →</button>
+        </div>
+        <div class="catering-promo-banner">
+          <img src="img/cateting_portada.jpg" alt="Lalos Catering" class="catering-banner-img" />
+          <div class="catering-banner-overlay">
+            <span class="badge-catering">LALOS CATERING</span>
+            <h2>Ventana de Catering y Eventos</h2>
+            <p>Bocaditos, coffee breaks, bodas y eventos corporativos.</p>
+          </div>
+        </div>
+        <div class="filter-chips" id="catering-chips">
+          <button type="button" class="chip active" data-cat-filter="todos">Todos los servicios (4)</button>
+          <button type="button" class="chip" data-cat-filter="favoritos">Solo Favoritos ❤️</button>
+        </div>
+        <div class="catalog-grid" id="catering-grid"></div>
+      </div>
+    </section>
+
+    <section id="view-nosotros" class="page-view">
+      <div class="container section-inner">
+        <div class="window-topbar">
+          <button type="button" class="btn btn-secondary" data-view-target="inicio">← Volver a Inicio</button>
+        </div>
         <div class="section-header">
           <span class="section-kicker">Nuestra identidad</span>
           <h2>Nosotros</h2>
-          <p>
-            Conoce el trabajo detrás de cada hornada en Lalos Panadería y por qué damos este primer paso hacia el comercio electrónico.
-          </p>
+          <p>Tradición panadera y servicio de catering en Huancayo.</p>
         </div>
-
         <div class="about-grid">
-          <article class="card about-story">
+          <article class="card">
             <h3>Quiénes somos</h3>
-            <p>
-              <strong>Lalos Panadería</strong> nace con el compromiso de ofrecer pan fresco y productos de panadería
-              de alta calidad para el desayuno, la lonchera y la mesa familiar. Cada jornada cuidamos los procesos de amasado,
-              fermentación y horneado para garantizar sabor y frescura constante.
-            </p>
-            <p>
-              Esta plataforma web representa la <strong>primera etapa de nuestro canal de comercio electrónico</strong>:
-              presentamos nuestra identidad, categorías próximas, ubicación, horarios y medios de pago antes de habilitar el catálogo digital.
-            </p>
-            <img src="img/portada.jpg" alt="Familia Panadera en Lalos Panadería" class="about-photo" />
+            <p><strong>Lalos Panadería</strong> elabora panes frescos, bases de pizza, panes especiales de masa madre y servicios de catering.</p>
+            <img src="img/portada.jpg" alt="Familia Panadera" class="about-photo" />
           </article>
-
           <div class="about-mv">
             <article class="card">
               <h3>Misión</h3>
-              <p>
-                Elaborar panes y productos de pastelería frescos cada día, brindando atención cercana,
-                puntualidad e higiene en cada pedido.
-              </p>
+              <p>Elaborar productos de panadería y servicios de catering frescos cada día con calidad y puntualidad.</p>
             </article>
-
             <article class="card">
               <h3>Visión</h3>
-              <p>
-                Ser la panadería de confianza de nuestra comunidad en Huancayo, integrando canales digitales que faciliten
-                los pedidos y entregas sin perder el toque artesanal.
-              </p>
+              <p>Ser la panadería y servicio de catering de confianza de nuestra comunidad.</p>
             </article>
           </div>
-        </div>
-
-        <div class="pillars-grid">
-          <article class="pillar">
-            <h4>Horneado diario</h4>
-            <p>Producción continua desde primeras horas de la mañana para asegurar productos frescos.</p>
-          </article>
-          <article class="pillar">
-            <h4>Variedad artesanal</h4>
-            <p>Líneas próximas de Panadería, Catering, Tortas, Pizzas y Pastas.</p>
-          </article>
-          <article class="pillar">
-            <h4>Fase 1 · Sin catálogo aún</h4>
-            <p>Esta entrega presenta la marca y medios de pago; el carrito y catálogo se activarán en la siguiente etapa.</p>
-          </article>
         </div>
       </div>
     </section>
 
-    <!-- Sección Métodos de pago (Primera parte) -->
-    <section id="pagos" class="section section-alt">
-      <div class="container">
+    <section id="view-ubicacion" class="page-view">
+      <div class="container section-inner">
+        <div class="window-topbar">
+          <button type="button" class="btn btn-secondary" data-view-target="inicio">← Volver a Inicio</button>
+        </div>
         <div class="section-header">
-          <span class="section-kicker">Primera parte · Informativa</span>
-          <h2>Métodos de pago</h2>
-          <p>
-            Conoce las opciones de pago que maneja Lalos Panadería. En esta primera entrega se presentan de manera informativa
-            mientras preparamos el módulo de catálogo y carrito.
-          </p>
+          <span class="section-kicker">Visítanos</span>
+          <h2>Ubicación y Horario</h2>
+          <p>Encuéntranos en Huancayo o escríbenos por WhatsApp.</p>
         </div>
-
-        <div class="payments-grid">
-          <article class="payment-card">
-            <span class="payment-tag">Más usado</span>
-            <h3>Billeteras digitales (Yape / Plin)</h3>
-            <p>Pagos inmediatos desde el celular mediante código QR o número afiliado en tienda y para pedidos programados.</p>
-            <ul>
-              <li><strong>Yape:</strong> [COMPLETAR: Nombre del titular o "Disponible en caja"]</li>
-              <li><strong>Plin:</strong> Disponible mediante QR interoperable</li>
-            </ul>
-          </article>
-
-          <article class="payment-card">
-            <span class="payment-tag">En local y recojo</span>
-            <h3>Efectivo y Tarjetas (POS)</h3>
-            <p>Atención directa en mostrador aceptando efectivo en soles y tarjetas de débito o crédito mediante terminal POS.</p>
-            <ul>
-              <li>Efectivo (Soles)</li>
-              <li>Tarjetas Visa y Mastercard (Débito / Crédito)</li>
-            </ul>
-          </article>
-
-          <article class="payment-card">
-            <span class="payment-tag">Pedidos especiales</span>
-            <h3>Transferencia bancaria</h3>
-            <p>Ideal para pedidos de catering, tortas o reservas anticipadas con validación previa de comprobante.</p>
-            <ul>
-              <li><strong>Banco:</strong> [COMPLETAR: BCP / Interbank / BBVA]</li>
-              <li>Confirmación directa antes del despacho</li>
-            </ul>
-          </article>
-        </div>
-
-        <div class="notice-box">
-          <strong>Importante (Alcance de esta entrega):</strong>       </div>
-    </section>
-
-    <!-- Sección Ubicación y Horario -->
-    <section id="ubicacion" class="section">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-kicker">Visítanos o contáctanos</span>
-          <h2>Ubicación y Horario de Atención</h2>
-          <p>Información de nuestro punto de atención en Huancayo.</p>
-        </div>
-
         <div class="info-grid">
           <article class="card">
             <h3>Dirección del local</h3>
             <p><strong>Dirección:</strong> Avenida Giráldez 363, Huancayo</p>
             <p><strong>Referencia:</strong> Cerca al grifo en Giráldez</p>
           </article>
-
           <article class="card">
-            <h3>Horario y WhatsApp</h3>
-            <p><strong>Lunes a sábado:</strong> [7:00 a. m. – 10:00 p. m.]</p>
-            <p><strong>Domingos y feriados:</strong> [8:00 a. m. – 9:30 p. m.]</p>
-            <p>
-              <strong>WhatsApp directo:</strong>
-              <a
-                href="https://wa.me/51999999999?text=Hola%20Lalos%20Panader%C3%ADa%2C%20quisiera%20consultar%20sobre%20sus%20horarios%20y%20pagos."
-                class="inline-wa-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Chatear por WhatsApp (+51 999 999 999)
-              </a>
-            </p>
+            <h3>Horario y contacto</h3>
+            <p><strong>Lunes a sábado:</strong> 7:00 a. m. – 10:00 p. m.</p>
+            <p><strong>Domingos:</strong> 8:00 a. m. – 9:30 p. m.</p>
+            <p><a href="https://wa.me/51999999999" class="inline-wa-link" target="_blank" rel="noopener noreferrer">Chatear por WhatsApp</a></p>
           </article>
         </div>
       </div>
@@ -250,25 +755,495 @@
     <div class="container footer-content">
       <div>
         <h3>Lalos Panadería · Comparte Felicidad</h3>
-        <p>Av. Giráldez 363, Huancayo · Proyecto de Comercio Electrónico (GitHub Pages).</p>
+        <p>Av. Giráldez 363, Huancayo · Simulación de comercio electrónico.</p>
       </div>
-      <div class="footer-meta">
-        <p><strong>Estado del sitio:</strong> Fase 1 — Nosotros, Métodos de pago (Parte 1) y Ubicación</p>
-        <p><strong>Próxima fase:</strong> Catálogo de productos y carrito de compras</p>
-      </div>
+      <p>Pagos y códigos de orden mostrados son simulados.</p>
     </div>
   </footer>
 
-  <!-- Botón flotante de WhatsApp (reemplaza 51999999999 por el número real) -->
-  <a
-    href="https://wa.me/51999999999?text=Hola%20Lalos%20Panader%C3%ADa%2C%20quisiera%20consultar%20sobre%20sus%20productos%20y%20pagos."
-    class="whatsapp-float"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Chatear por WhatsApp con Lalos Panadería"
-  >
-    💬 WhatsApp
-  </a>
+  <!-- Modal Cantidad -->
+  <div class="modal-backdrop" id="qty-modal-backdrop">
+    <div class="modal-box qty-modal">
+      <button type="button" class="modal-close" id="qty-modal-close">✕</button>
+      <img src="" alt="" id="qty-modal-img" class="qty-modal-img" />
+      <span class="qty-modal-cat" id="qty-modal-cat"></span>
+      <h3 id="qty-modal-title"></h3>
+      <p class="qty-modal-price" id="qty-modal-price"></p>
+      <div class="qty-control-block">
+        <label>CANTIDAD</label>
+        <div class="qty-stepper">
+          <button type="button" id="qty-minus">−</button>
+          <span id="qty-value">1</span>
+          <button type="button" id="qty-plus">+</button>
+        </div>
+        <p class="qty-subtotal-preview" id="qty-subtotal-preview">Subtotal: S/ 0.00</p>
+      </div>
+      <button type="button" class="btn-terracotta-full" id="confirm-add-cart">AÑADIR AL CARRITO</button>
+    </div>
+  </div>
 
+  <!-- Drawer Carrito -->
+  <aside class="cart-drawer-backdrop" id="cart-drawer-backdrop">
+    <div class="cart-drawer">
+      <div class="drawer-header">
+        <h3>🛒 Tu Carrito</h3>
+        <button type="button" class="modal-close" id="cart-drawer-close">✕</button>
+      </div>
+      <div class="drawer-items" id="cart-items-list"></div>
+      <div class="drawer-footer">
+        <div class="drawer-summary-row">
+          <span>Subtotal:</span>
+          <strong id="drawer-subtotal">S/ 0.00</strong>
+        </div>
+        <button type="button" class="btn-terracotta-full" id="open-checkout-btn" disabled>CONTINUAR A PAGO SIMULADO</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Pasarela 4 pasos -->
+  <div class="modal-backdrop" id="checkout-modal-backdrop">
+    <div class="modal-box checkout-modal">
+      <button type="button" class="modal-close" id="checkout-close">✕</button>
+      <div class="sim-banner">SIMULACIÓN EDUCATIVA · NINGÚN CARGO ES REAL</div>
+      <h3>Pasarela de Pago Simulada</h3>
+      <div class="steps-indicator">
+        <span class="step-pill active" data-step="1">1. Datos</span>
+        <span class="step-pill" data-step="2">2. Entrega</span>
+        <span class="step-pill" data-step="3">3. Pago</span>
+        <span class="step-pill" data-step="4">4. Confirmación</span>
+      </div>
+
+      <div class="checkout-step active" id="step-1">
+        <h4>Paso 1: Datos del cliente</h4>
+        <div class="form-group">
+          <label for="customer-name">Nombre completo *</label>
+          <input type="text" id="customer-name" placeholder="Ej. Renzo Barrientos" />
+          <small class="error-text" id="name-error"></small>
+        </div>
+        <div class="form-group">
+          <label for="customer-phone">Teléfono (9 dígitos) *</label>
+          <input type="tel" id="customer-phone" placeholder="Ej. 987654321" />
+          <small class="error-text" id="phone-error"></small>
+        </div>
+        <div class="step-actions right">
+          <button type="button" class="btn btn-yellow" id="to-step-2">Siguiente: Entrega →</button>
+        </div>
+      </div>
+
+      <div class="checkout-step" id="step-2">
+        <h4>Paso 2: Modalidad de entrega</h4>
+        <label class="radio-card">
+          <input type="radio" name="delivery-type" value="recojo" checked />
+          <div><strong>Recojo en tienda (Av. Giráldez 363)</strong><span>Gratis (S/ 0.00)</span></div>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="delivery-type" value="delivery" />
+          <div><strong>Delivery local (Simulado)</strong><span id="delivery-cost-label">S/ 5.00 (Gratis desde S/ 50.00)</span></div>
+        </label>
+        <div class="form-group" id="delivery-address-group" style="display:none;">
+          <label for="delivery-address">Dirección de entrega *</label>
+          <input type="text" id="delivery-address" placeholder="Ej. Av. Giráldez..." />
+          <small class="error-text" id="address-error"></small>
+        </div>
+        <div class="step-actions">
+          <button type="button" class="btn btn-secondary" id="back-to-1">← Atrás</button>
+          <button type="button" class="btn btn-yellow" id="to-step-3">Siguiente: Pago →</button>
+        </div>
+      </div>
+
+      <div class="checkout-step" id="step-3">
+        <h4>Paso 3: Método de pago simulado</h4>
+        <div class="payment-methods-list">
+          <label class="pm-option active"><input type="radio" name="pay-method" value="Yape" checked /> Yape</label>
+          <label class="pm-option"><input type="radio" name="pay-method" value="Plin" /> Plin</label>
+          <label class="pm-option"><input type="radio" name="pay-method" value="Tarjeta" /> Tarjeta</label>
+          <label class="pm-option"><input type="radio" name="pay-method" value="Efectivo" /> Efectivo</label>
+          <label class="pm-option"><input type="radio" name="pay-method" value="Transferencia" /> Transferencia</label>
+        </div>
+        <div class="payment-detail-box" id="payment-detail-box"></div>
+        <div class="step-actions">
+          <button type="button" class="btn btn-secondary" id="back-to-2">← Atrás</button>
+          <button type="button" class="btn btn-yellow" id="to-step-4">Siguiente: Confirmación →</button>
+        </div>
+      </div>
+
+      <div class="checkout-step" id="step-4">
+        <h4>Paso 4: Confirmación simulada</h4>
+        <div class="order-summary-box" id="order-summary-box"></div>
+        <div id="order-result-box" class="order-result-box" style="display:none;"></div>
+        <div class="step-actions" id="step-4-actions">
+          <button type="button" class="btn btn-secondary" id="back-to-3">← Atrás</button>
+          <button type="button" class="btn-terracotta-pay" id="btn-pagar-simulado">PAGAR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+  <a href="https://wa.me/51999999999" class="whatsapp-float" target="_blank" rel="noopener noreferrer">💬 WhatsApp</a>
+
+  <script>
+    (function () {
+      const PANADERIA = [
+        { id: "pre-pizza", name: "Pre Pizza Lalos (8 porciones)", cat: "panaderia", label: "PANADERÍA", price: 10.5, img: "img/panaderia1.JPG", desc: "Base de pizza lista para hornear en casa (240 g, 8 porciones)." },
+        { id: "multigrano", name: "Pan de molde Multi Grano", cat: "panaderia", label: "PANADERÍA", price: 9.5, img: "img/panaderia2.jpg", desc: "Pan de molde con ajonjolí, linaza y avena para desayunos." },
+        { id: "masa-madre", name: "Pan de molde Masa Madre", cat: "panaderia", label: "PANADERÍA", price: 11.0, img: "img/panaderia3.JPG", desc: "Fermentación natural con masa madre y textura suave." },
+        { id: "fase3-tortas", name: "Tortas", cat: "proximamente", label: "TORTAS · FASE 3", price: null, img: "img/portada.jpg", desc: "Disponible en la Fase 3 del proyecto." },
+        { id: "fase3-pizzas", name: "Pizzas", cat: "proximamente", label: "PIZZAS · FASE 3", price: null, img: "img/panaderia1.JPG", desc: "Disponible en la Fase 3 del proyecto." },
+        { id: "fase3-pastas", name: "Pastas", cat: "proximamente", label: "PASTAS · FASE 3", price: null, img: "img/portada.jpg", desc: "Disponible en la Fase 3 del proyecto." }
+      ];
+
+      const CATERING = [
+        { id: "cat-emp", name: "Catering Empresarial", cat: "catering", label: "CATERING", price: 180.0, img: "img/catring_empresas.jpg", desc: "Mesa de bocaditos dulces y salados para eventos corporativos." },
+        { id: "cat-boda", name: "Catering para Bodas", cat: "catering", label: "CATERING", price: 450.0, img: "img/cateringboda.jpg", desc: "Montaje completo con empanadas, postres en copa y torta." },
+        { id: "cat-coffee", name: "Catering Coffee Break", cat: "catering", label: "CATERING", price: 140.0, img: "img/catering1.jpg", desc: "Tartaletas de kiwi, volovanes de lúcuma y bocaditos." },
+        { id: "cat-fam", name: "Catering Familiar", cat: "catering", label: "CATERING", price: 160.0, img: "img/catering2.jpg", desc: "Estación móvil con bebidas calientes, sándwiches y bocaditos." }
+      ];
+
+      const ALL = PANADERIA.concat(CATERING);
+      let favs = [];
+      let cart = [];
+      let view = "inicio";
+      let panFilter = "todos";
+      let catFilter = "todos";
+      let query = "";
+      let pendingItem = null;
+      let qty = 1;
+
+      const money = (n) => "S/ " + Number(n || 0).toFixed(2);
+
+      function toast(text) {
+        const box = document.getElementById("toast-container");
+        const el = document.createElement("div");
+        el.className = "toast";
+        el.textContent = text;
+        box.appendChild(el);
+        setTimeout(() => el.remove(), 2400);
+      }
+
+      function cardHTML(item) {
+        const isFav = favs.indexOf(item.id) !== -1;
+        const soon = item.cat === "proximamente";
+        return `
+          <article class="product-card">
+            <div class="product-img-wrap">
+              <img src="${item.img}" alt="${item.name}" />
+              <button type="button" class="fav-btn-card" data-fav-id="${item.id}">${isFav ? "❤️" : "🤍"}</button>
+            </div>
+            <div class="product-body">
+              <span class="product-cat-label">${item.label}</span>
+              <h3 class="product-title">${item.name}</h3>
+              <p class="product-desc">${item.desc}</p>
+              <div class="product-footer">
+                ${soon
+                  ? `<span class="coming-soon-badge">PRÓXIMAMENTE (Fase 3)</span>`
+                  : `<span class="product-price">${money(item.price)}</span><button type="button" class="btn-add-cart" data-add-id="${item.id}">Añadir al carrito</button>`}
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      function syncChips() {
+        document.querySelectorAll("#panaderia-chips .chip").forEach((c) => c.classList.toggle("active", c.dataset.panFilter === panFilter));
+        document.querySelectorAll("#catering-chips .chip").forEach((c) => c.classList.toggle("active", c.dataset.catFilter === catFilter));
+      }
+
+      function renderPan() {
+        const grid = document.getElementById("panaderia-grid");
+        const q = query.trim().toLowerCase();
+        const list = PANADERIA.filter((i) => {
+          if (panFilter === "todos" && i.cat !== "panaderia") return false;
+          if (panFilter === "proximamente" && i.cat !== "proximamente") return false;
+          if (panFilter === "favoritos" && favs.indexOf(i.id) === -1) return false;
+          if (q && i.name.toLowerCase().indexOf(q) === -1 && i.desc.toLowerCase().indexOf(q) === -1) return false;
+          return true;
+        });
+        grid.innerHTML = list.length ? list.map(cardHTML).join("") : `<p class="empty-catalog-msg">Sin resultados en Panadería.</p>`;
+      }
+
+      function renderCat() {
+        const grid = document.getElementById("catering-grid");
+        const q = query.trim().toLowerCase();
+        const list = CATERING.filter((i) => {
+          if (catFilter === "favoritos" && favs.indexOf(i.id) === -1) return false;
+          if (q && i.name.toLowerCase().indexOf(q) === -1 && i.desc.toLowerCase().indexOf(q) === -1) return false;
+          return true;
+        });
+        grid.innerHTML = list.length ? list.map(cardHTML).join("") : `<p class="empty-catalog-msg">Sin resultados en Catering.</p>`;
+      }
+
+      function goView(name, upcoming) {
+        const valid = ["inicio", "panaderia", "catering", "nosotros", "ubicacion"];
+        view = valid.indexOf(name) !== -1 ? name : "inicio";
+        document.querySelectorAll(".page-view").forEach((s) => s.classList.toggle("active", s.id === "view-" + view));
+        document.querySelectorAll(".nav-tab").forEach((t) => t.classList.toggle("active", t.dataset.viewTarget === view));
+        if (view === "panaderia") {
+          if (upcoming) { panFilter = "proximamente"; syncChips(); }
+          renderPan();
+        } else if (view === "catering") {
+          renderCat();
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function updateFavs() {
+        document.getElementById("fav-count").textContent = String(favs.length);
+      }
+
+      function subtotal() {
+        return cart.reduce((s, i) => s + i.price * i.qty, 0);
+      }
+
+      function updateCart() {
+        const units = cart.reduce((s, i) => s + i.qty, 0);
+        const sub = subtotal();
+        document.getElementById("cart-count").textContent = String(units);
+        document.getElementById("cart-subtotal").textContent = money(sub);
+        document.getElementById("drawer-subtotal").textContent = money(sub);
+        document.getElementById("open-checkout-btn").disabled = cart.length === 0;
+
+        const listEl = document.getElementById("cart-items-list");
+        if (!cart.length) {
+          listEl.innerHTML = `<p class="empty-cart-msg">Tu carrito está vacío.</p>`;
+          return;
+        }
+        listEl.innerHTML = cart.map((i) => `
+          <div class="cart-item-row">
+            <img src="${i.img}" alt="${i.name}" />
+            <div class="cart-item-info">
+              <h4>${i.name}</h4>
+              <span>${money(i.price)} c/u</span>
+              <div class="cart-item-controls">
+                <button type="button" data-dec="${i.id}">−</button>
+                <span>${i.qty}</span>
+                <button type="button" data-inc="${i.id}">+</button>
+                <button type="button" class="remove-item-btn" data-del="${i.id}">🗑</button>
+              </div>
+            </div>
+            <strong>${money(i.price * i.qty)}</strong>
+          </div>
+        `).join("");
+      }
+
+      function openQty(item) {
+        pendingItem = item;
+        qty = 1;
+        document.getElementById("qty-modal-img").src = item.img;
+        document.getElementById("qty-modal-cat").textContent = item.label;
+        document.getElementById("qty-modal-title").textContent = item.name;
+        document.getElementById("qty-modal-price").textContent = money(item.price);
+        document.getElementById("qty-value").textContent = "1";
+        document.getElementById("qty-subtotal-preview").textContent = "Subtotal: " + money(item.price);
+        document.getElementById("qty-modal-backdrop").classList.add("open");
+      }
+
+      function closeQty() {
+        document.getElementById("qty-modal-backdrop").classList.remove("open");
+        pendingItem = null;
+      }
+
+      function setStep(n) {
+        document.querySelectorAll(".checkout-step").forEach((el, idx) => el.classList.toggle("active", idx + 1 === n));
+        document.querySelectorAll(".step-pill").forEach((p) => p.classList.toggle("active", Number(p.dataset.step) <= n));
+        if (n === 2) {
+          document.getElementById("delivery-cost-label").textContent = subtotal() >= 50 ? "Gratis (S/ 0.00)" : "S/ 5.00 (Gratis desde S/ 50.00)";
+        }
+        if (n === 3) {
+          const m = document.querySelector('input[name="pay-method"]:checked').value;
+          document.querySelectorAll(".pm-option").forEach((o) => o.classList.toggle("active", o.querySelector("input").value === m));
+          const box = document.getElementById("payment-detail-box");
+          if (m === "Yape" || m === "Plin") {
+            box.innerHTML = `<strong>Pago simulado con ${m}</strong><div class="qr-fake"></div><p style="text-align:center;">QR de demostración (sin cobro real).</p>`;
+          } else if (m === "Tarjeta") {
+            box.innerHTML = `<strong>Tarjeta simulada</strong><div class="form-group" style="margin-top:8px;margin-bottom:0;"><input type="text" placeholder="4532 •••• •••• 0000" /></div>`;
+          } else if (m === "Efectivo") {
+            box.innerHTML = `<strong>Efectivo (Simulado)</strong><p style="margin-top:6px;">Se registra como pago en efectivo al recoger/recibir.</p>`;
+          } else {
+            box.innerHTML = `<strong>Transferencia (Simulada)</strong><p style="margin-top:6px;">CCI de prueba: 002-000-000000000000-00.</p>`;
+          }
+        }
+        if (n === 4) {
+          const cname = document.getElementById("customer-name").value.trim();
+          const cphone = document.getElementById("customer-phone").value.trim();
+          const dtype = document.querySelector('input[name="delivery-type"]:checked').value;
+          const addr = document.getElementById("delivery-address").value.trim();
+          const pm = document.querySelector('input[name="pay-method"]:checked').value;
+          const sub = subtotal();
+          const ship = dtype === "recojo" ? 0 : (sub >= 50 ? 0 : 5);
+          document.getElementById("order-result-box").style.display = "none";
+          document.getElementById("step-4-actions").style.display = "flex";
+          document.getElementById("order-summary-box").innerHTML = `
+            <p><strong>Cliente:</strong> ${cname} (${cphone})</p>
+            <p><strong>Entrega:</strong> ${dtype === "recojo" ? "Recojo en tienda" : "Delivery — " + addr}</p>
+            <p><strong>Pago:</strong> ${pm} (Simulado)</p>
+            <p><strong>Total:</strong> ${money(sub + ship)}</p>
+          `;
+        }
+      }
+
+      document.addEventListener("click", (e) => {
+        const vBtn = e.target.closest("[data-view-target]");
+        if (vBtn) {
+          e.preventDefault();
+          goView(vBtn.dataset.viewTarget, vBtn.dataset.upcoming === "1");
+          document.getElementById("categories-menu").classList.remove("open");
+          return;
+        }
+        const fBtn = e.target.closest("[data-fav-id]");
+        if (fBtn) {
+          const id = fBtn.dataset.favId;
+          const idx = favs.indexOf(id);
+          if (idx !== -1) { favs.splice(idx, 1); toast("Quitado de favoritos"); }
+          else { favs.push(id); toast("Añadido a favoritos ❤️"); }
+          updateFavs(); renderPan(); renderCat();
+          return;
+        }
+        const aBtn = e.target.closest("[data-add-id]");
+        if (aBtn) {
+          const item = ALL.find((p) => p.id === aBtn.dataset.addId);
+          if (item && item.price !== null) openQty(item);
+        }
+      });
+
+      document.getElementById("categories-toggle").addEventListener("click", (e) => {
+        e.stopPropagation();
+        document.getElementById("categories-menu").classList.toggle("open");
+      });
+
+      document.getElementById("panaderia-chips").addEventListener("click", (e) => {
+        const ch = e.target.closest(".chip");
+        if (!ch) return;
+        panFilter = ch.dataset.panFilter;
+        syncChips(); renderPan();
+      });
+
+      document.getElementById("catering-chips").addEventListener("click", (e) => {
+        const ch = e.target.closest(".chip");
+        if (!ch) return;
+        catFilter = ch.dataset.catFilter;
+        syncChips(); renderCat();
+      });
+
+      document.getElementById("toggle-fav-only-btn").addEventListener("click", () => {
+        if (view === "catering") { catFilter = catFilter === "favoritos" ? "todos" : "favoritos"; syncChips(); renderCat(); }
+        else { panFilter = "favoritos"; syncChips(); goView("panaderia", false); }
+      });
+
+      document.getElementById("qty-minus").addEventListener("click", () => {
+        if (qty > 1 && pendingItem) {
+          qty--;
+          document.getElementById("qty-value").textContent = String(qty);
+          document.getElementById("qty-subtotal-preview").textContent = "Subtotal: " + money(pendingItem.price * qty);
+        }
+      });
+
+      document.getElementById("qty-plus").addEventListener("click", () => {
+        if (pendingItem) {
+          qty++;
+          document.getElementById("qty-value").textContent = String(qty);
+          document.getElementById("qty-subtotal-preview").textContent = "Subtotal: " + money(pendingItem.price * qty);
+        }
+      });
+
+      document.getElementById("qty-modal-close").addEventListener("click", closeQty);
+
+      document.getElementById("confirm-add-cart").addEventListener("click", () => {
+        if (!pendingItem) return;
+        const found = cart.find((c) => c.id === pendingItem.id);
+        if (found) found.qty += qty;
+        else cart.push({ id: pendingItem.id, name: pendingItem.name, price: pendingItem.price, img: pendingItem.img, qty });
+        updateCart();
+        toast("Añadido: " + qty + " × " + pendingItem.name);
+        closeQty();
+      });
+
+      document.getElementById("open-cart-btn").addEventListener("click", () => document.getElementById("cart-drawer-backdrop").classList.add("open"));
+      document.getElementById("cart-drawer-close").addEventListener("click", () => document.getElementById("cart-drawer-backdrop").classList.remove("open"));
+
+      document.getElementById("cart-items-list").addEventListener("click", (e) => {
+        if (e.target.dataset.dec) {
+          const it = cart.find((c) => c.id === e.target.dataset.dec);
+          if (it) { if (it.qty > 1) it.qty--; else cart = cart.filter((c) => c.id !== it.id); updateCart(); }
+        } else if (e.target.dataset.inc) {
+          const it = cart.find((c) => c.id === e.target.dataset.inc);
+          if (it) { it.qty++; updateCart(); }
+        } else if (e.target.dataset.del) {
+          cart = cart.filter((c) => c.id !== e.target.dataset.del);
+          updateCart();
+        }
+      });
+
+      document.getElementById("open-checkout-btn").addEventListener("click", () => {
+        document.getElementById("cart-drawer-backdrop").classList.remove("open");
+        setStep(1);
+        document.getElementById("checkout-modal-backdrop").classList.add("open");
+      });
+
+      document.getElementById("checkout-close").addEventListener("click", () => document.getElementById("checkout-modal-backdrop").classList.remove("open"));
+
+      document.getElementById("to-step-2").addEventListener("click", () => {
+        const n = document.getElementById("customer-name").value.trim();
+        const p = document.getElementById("customer-phone").value.replace(/\D/g, "");
+        document.getElementById("name-error").textContent = n.length < 3 ? "Ingresa tu nombre." : "";
+        document.getElementById("phone-error").textContent = p.length < 9 ? "Ingresa 9 dígitos." : "";
+        if (n.length >= 3 && p.length >= 9) setStep(2);
+      });
+
+      document.querySelectorAll('input[name="delivery-type"]').forEach((r) => {
+        r.addEventListener("change", () => {
+          document.getElementById("delivery-address-group").style.display = r.value === "delivery" ? "block" : "none";
+        });
+      });
+
+      document.getElementById("back-to-1").addEventListener("click", () => setStep(1));
+      document.getElementById("to-step-3").addEventListener("click", () => {
+        const t = document.querySelector('input[name="delivery-type"]:checked').value;
+        const a = document.getElementById("delivery-address").value.trim();
+        if (t === "delivery" && a.length < 5) {
+          document.getElementById("address-error").textContent = "Ingresa dirección.";
+          return;
+        }
+        document.getElementById("address-error").textContent = "";
+        setStep(3);
+      });
+
+      document.querySelectorAll('input[name="pay-method"]').forEach((r) => r.addEventListener("change", () => setStep(3)));
+      document.getElementById("back-to-2").addEventListener("click", () => setStep(2));
+      document.getElementById("to-step-4").addEventListener("click", () => setStep(4));
+      document.getElementById("back-to-3").addEventListener("click", () => setStep(3));
+
+      document.getElementById("btn-pagar-simulado").addEventListener("click", () => {
+        const code = "LALOS-SIM-" + Math.floor(100000 + Math.random() * 900000);
+        document.getElementById("order-result-box").style.display = "block";
+        document.getElementById("order-result-box").innerHTML = `<strong>¡Orden simulada generada!</strong><br/>Código: <strong>${code}</strong>`;
+        document.getElementById("step-4-actions").style.display = "none";
+        cart = [];
+        updateCart();
+        toast("Orden " + code + " generada");
+      });
+
+      document.getElementById("search-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        query = document.getElementById("search-input").value;
+        goView(document.getElementById("search-category").value, false);
+      });
+
+      document.getElementById("search-input").addEventListener("input", (e) => {
+        query = e.target.value;
+        document.getElementById("clear-search-btn").style.display = query ? "inline-flex" : "none";
+        if (view === "catering") renderCat(); else renderPan();
+      });
+
+      document.getElementById("clear-search-btn").addEventListener("click", () => {
+        query = "";
+        document.getElementById("search-input").value = "";
+        document.getElementById("clear-search-btn").style.display = "none";
+        renderPan(); renderCat();
+      });
+
+      updateFavs(); renderPan(); renderCat(); updateCart();
+    })();
+  </script>
 </body>
 </html>
